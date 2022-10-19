@@ -1,6 +1,6 @@
 import csv
 
-""" Assignment 3  -  Electronic Medical Record (EMR) """
+""" Electronic Medical Record (EMR) """
 
 
 class Physician:
