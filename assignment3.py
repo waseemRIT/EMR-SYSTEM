@@ -3,59 +3,6 @@ import csv
 """ Electronic Medical Record (EMR) """
 
 
-class Physician:
-    """
-    A Physician Class That Contains:
-    ID --> integer
-    Name --> string
-    Speciality --> string
-    """
-
-    ''' 1  a - DONE '''
-    # Defining the fields in slots
-    __slots__ = ["__id", "__name", "__specialty"]
-
-    # Initializing the fields in the constructor
-    def __init__(self, id, name, specialty):
-        self.__id = id
-        self.__name = name
-        self.__specialty = specialty
-
-    ''' 1 b - DONE '''
-
-    # Returns Physician's id number
-    def get_id(self):
-        return self.__id
-
-    # Returns Physician's name
-    def get_name(self):
-        return self.__name
-
-    # Returns the Physician's speciality
-    def get_speciality(self):
-        return self.__specialty
-
-    # Changes the Physician's id number
-    def set_id(self, new_id):
-        self.__id = new_id
-
-    # Changes the Physician's name
-    def set_name(self, new_name):
-        self.__name = new_name
-
-    # Changes the Physician's speciality
-    def set_specialty(self, new_speciality):
-        self.__specialty = new_speciality
-
-    ''' 1 c - DONE'''
-
-    # Returns the Physician's name when Physician Object is pronted
-    def __str__(self):
-        return f"Physician: {self.__name}"
-
-    # Returns the Physician's specified attributes
-    def __repr__(self):
-        return f"name: {self.__name}\nid: {self.__id}\nspeciality: {self.__specialty}\n"
 
 
 class Patient:
@@ -126,51 +73,60 @@ class Patient:
 
 
 # 3 - DONE
-class Encounter:
+class Physician:
     """
-    Used to record the encounters between patients and physicians.
-    it takes:
-    physician --> string
-    patient --> string
-    date  --> string dd/mm/yy
-    disease --> string
-    medication --> string
+    A class representing a healthcare provider in an electronic medical record (EMR) system.
     """
 
-    # Defining the fields in slots
-    __slots__ = ["physician", "patient", "date", "disease", "medication"]
+    # Define the fields that the class will store
+    __slots__ = ["__id", "__name", "__specialty"]
 
-    # Initializing the fields in the constructor
-    def __init__(self, physician, patient, date, disease, medication):
-        self.medication = medication
-        self.disease = disease
-        self.date = date
-        self.patient = patient
-        self.physician = physician
+    def __init__(self, id: int, name: str, specialty: str):
+        """
+        Initialize the fields of a new Physician object.
 
-    # returns physician's name
-    def get_physician(self):
-        return self.physician.get_name()
+        Arguments:
+        id -- an integer representing the physician's ID number
+        name -- a string representing the physician's name
+        specialty -- a string representing the physician's area of specialization
+        """
+        self.__id = id
+        self.__name = name
+        self.__specialty = specialty
 
-    # returns patient's name
-    def get_patient(self):
-        return self.patient.get_name()
+    def get_id(self) -> int:
+        """Return the physician's ID number."""
+        return self.__id
 
-    # returns the date of the encounter
-    def get_date(self):
-        return self.date
+    def get_name(self) -> str:
+        """Return the physician's name."""
+        return self.__name
 
-    # returns the disease type
-    def get_disease(self):
-        return self.disease
+    def get_speciality(self) -> str:
+        """Return the physician's area of specialization."""
+        return self.__specialty
 
-    # returns the medication
-    def get_medication(self):
-        return self.medication
+    def set_id(self, new_id: int):
+        """Change the physician's ID number."""
+        self.__id = new_id
 
-    # print's Patient's and Physician's names
-    def __str__(self):
-        return f"{self.physician}\n{self.patient}"
+    def set_name(self, new_name: str):
+        """Change the physician's name."""
+        self.__name = new_name
+
+    def set_specialty(self, new_speciality: str):
+        """Change the physician's area of specialization."""
+        self.__specialty = new_speciality
+
+    def __str__(self) -> str:
+        """Return a string representation of the physician's name when the Physician object is printed."""
+        return f"Physician: {self.__name}"
+
+    def __repr__(self) -> str:
+        """
+        Return a string representation of the Physician object, including the values of all of its fields.
+        """
+        return f"name: {self.__name}\nid: {self.__id}\nspeciality: {self.__specialty}\n"
 
 
 # Used to add the Encounters in a CSV File
