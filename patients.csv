@@ -1,4 +1,4 @@
-ID,name,Speciality,
-12,Waseem,Neurologists,
-13,Kassem,Anesthesiology,
-14,Mazen,Dermatology,
+id,name,speciality
+1,Dr. Jane,Pediatrician
+2,Dr. John,Family Practitioner
+3,Dr. Rachel,Cardiologist
