@@ -125,53 +125,67 @@ class Patient:
         return f"emr_id: {self.__emr_id}\nname: {self.__name}\ngender: {self.__gender}\nphone number: {self.__phone_number}\n"
 
 
-
 # 3 - DONE
 class Encounter:
     """
-    Used to record the encounters between patients and physicians.
-    it takes:
-    physician --> string
-    patient --> string
-    date  --> string dd/mm/yy
-    disease --> string
-    medication --> string
+    A class representing an encounter between a patient and a physician in an electronic medical record (EMR) system.
     """
 
-    # Defining the fields in slots
-    __slots__ = ["physician", "patient", "date", "disease", "medication"]
+    # Define the fields that the class will store
+    __slots__ = ["__physician", "__patient", "__date", "__disease", "__medication"]
 
-    # Initializing the fields in the constructor
-    def __init__(self, physician, patient, date, disease, medication):
-        self.medication = medication
-        self.disease = disease
-        self.date = date
-        self.patient = patient
-        self.physician = physician
+    def __init__(self, physician: Physician, patient: Patient, date: str, disease: str, medication: str):
+        """
+        Initialize the fields of a new Encounter object.
 
-    # returns physician's name
-    def get_physician(self):
-        return self.physician.get_name()
+        Arguments:
+        physician -- a Physician object representing the physician involved in the encounter
+        patient -- a Patient object representing the patient involved in the encounter
+        date -- a string representing the date of the encounter in the format "dd/mm/yy"
+        disease -- a string representing the diagnosis made during the encounter
+        medication -- a string representing the medication prescribed during the encounter
+        """
+        self.__physician = physician
+        self.__patient = patient
+        self.__date = date
+        self.__disease = disease
+        self.__medication = medication
 
-    # returns patient's name
-    def get_patient(self):
-        return self.patient.get_name()
+    def get_physician(self) -> str:
+        """Return the name of the physician involved in the encounter."""
+        return self.__physician.get_name()
 
-    # returns the date of the encounter
-    def get_date(self):
-        return self.date
+    def get_patient(self) -> str:
+        """Return the name of the patient involved in the encounter."""
+        return self.__patient.get_name()
 
-    # returns the disease type
-    def get_disease(self):
-        return self.disease
+    def get_date(self) -> str:
+        """Return the date of the encounter."""
+        return self.__date
 
-    # returns the medication
-    def get_medication(self):
-        return self.medication
+    def get_disease(self) -> str:
+        """Return the diagnosis made during the encounter."""
+        return self.__disease
 
-    # print's Patient's and Physician's names
-    def __str__(self):
-        return f"{self.physician}\n{self.patient}"
+    def get_medication(self) -> str:
+        """Return the medication prescribed during the encounter."""
+        return self.__medication
+
+    def __str__(self) -> str:
+        """
+        Return a string representation of the patient's name and the physician's name when the Encounter object is printed.
+        """
+        return f"{self.__physician}\n{self.__patient}"
+
+    def __repr__(self) -> str:
+        """
+        Return a string representation of the Encounter object, including the values of all of its fields.
+        """
+        return (f"physician: {self.__physician}\n"
+                f"patient: {self.__patient}\n"
+                f"date: {self.__date}\n"
+                f"disease: {self.__disease}\n"
+                f"medication: {self.__medication}\n")
 
 
 # Used to add the Encounters in a CSV File
@@ -292,10 +306,10 @@ def main():
     print("Encounters:->\n")
 
     # Printing the Encounters
-    print(encounter1,"\n")
-    print(encounter2,"\n")
-    print(encounter3,"\n")
-    print(encounter4,"\n")
+    print(encounter1, "\n")
+    print(encounter2, "\n")
+    print(encounter3, "\n")
+    print(encounter4, "\n")
     print(encounter5)
 
     ''' To Add Encounters into the Encounters.csv File '''
