@@ -1,11 +1,11 @@
-emr_id,name,gender,phone Number
-1,wael,male,971561053678
-2,Rami,male,971561053693
-3,Rama,female,971561053628
-4,Jude,female,971561034678
-5,Wakeel,male,971561053267
-6,Osama,male,971561053378
-7,Afra,female,971526753678
-8,Rashid,male,971561278678
-9,Mustafa,female,971561028678
-10,Osama,male,971518053678
+emr_id,name,gender,phone_number
+1,Alice,Female,123-456-7890
+2,Bob,Male,123-456-7891
+3,Charlie,Male,123-456-7892
+4,Diana,Female,123-456-7893
+5,Eve,Female,123-456-7894
+6,Frank,Male,123-456-7895
+7,Greta,Female,123-456-7896
+8,Henry,Male,123-456-7897
+9,Iris,Female,123-456-7898
+10,Jack,Male,123-456-7899
