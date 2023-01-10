@@ -153,9 +153,6 @@ class Encounter:
     A class representing an encounter between a patient and a physician in an electronic medical record (EMR) system.
     """
 
-    # Define the fields that the class will store
-    __slots__ = ["__physician", "__patient", "__date", "__disease", "__medication"]
-
     def __init__(self, physician: Physician, patient: Patient, date: str, disease: str, medication: str):
         """
         Initialize the fields of a new Encounter object.
@@ -167,47 +164,50 @@ class Encounter:
         disease -- a string representing the diagnosis made during the encounter
         medication -- a string representing the medication prescribed during the encounter
         """
-        self.__physician = physician
-        self.__patient = patient
-        self.__date = date
-        self.__disease = disease
-        self.__medication = medication
+        self._physician = physician
+        self._patient = patient
+        self._date = date
+        self._disease = disease
+        self._medication = medication
 
-    def get_physician(self) -> str:
-        """Return the name of the physician involved in the encounter."""
-        return self.__physician.get_name()
+    @property
+    def physician(self) -> Physician:
+        """Return the physician involved in the encounter."""
+        return self._physician
 
-    def get_patient(self) -> str:
-        """Return the name of the patient involved in the encounter."""
-        return self.__patient.get_name()
+    @property
+    def patient(self) -> Patient:
+        """Return the patient involved in the encounter."""
+        return self._patient
 
-    def get_date(self) -> str:
+    @property
+    def date(self) -> str:
         """Return the date of the encounter."""
-        return self.__date
+        return self._date
 
-    def get_disease(self) -> str:
+    @property
+    def disease(self) -> str:
         """Return the diagnosis made during the encounter."""
-        return self.__disease
+        return self._disease
 
-    def get_medication(self) -> str:
+    @property
+    def medication(self) -> str:
         """Return the medication prescribed during the encounter."""
-        return self.__medication
+        return self._medication
 
     def __str__(self) -> str:
         """
-        Return a string representation of the patient's name and the physician's name when the Encounter object is printed.
-        """
-        return f"{self.__physician}\n{self.__patient}"
+        Return a string representation of the encounter, including the name of the patient and the physician. """
+        return f"Encounter between {self.patient.name} and {self.physician.name}"
 
     def __repr__(self) -> str:
         """
         Return a string representation of the Encounter object, including the values of all of its fields.
         """
-        return (f"physician: {self.__physician}\n"
-                f"patient: {self.__patient}\n"
-                f"date: {self.__date}\n"
-                f"disease: {self.__disease}\n"
-                f"medication: {self.__medication}\n")
+        return (f"Encounter between {self.patient.name} and {self.physician.name}\n"
+                f"Date: {self.date}\n"
+                f"Disease: {self.disease}\n"
+                f"Medication: {self.medication}\n")
 
 
 # Used to add the Encounters in a CSV File
