@@ -1,4 +1,7 @@
 import csv
+from datetime import datetime
+import random
+from typing import List
 
 """ Electronic Medical Record (EMR) """
 
@@ -210,159 +213,145 @@ class Encounter:
                 f"Medication: {self.medication}\n")
 
 
-# Used to add the Encounters in a CSV File
-def add_encounter_csv(physician, patient, date, disease, medication):
-    with open("encounter.csv", "a", newline="") as encounter:
-        # A Tuple of my fields to add
-        fields = (physician, patient, date, disease, medication)
-        writer = csv.writer(encounter)
+def add_encounter(encounter, filename='encounter.csv'):
+    """
+    Add a new encounter to a CSV file.
+
+    Arguments:
+    encounter -- a tuple containing the information for the encounter
+                 (physician, patient, date, disease, medication)
+    filename -- the name of the CSV file to add the encounter to (default is 'encounter.csv')
+    """
+    with open(filename, 'a', newline='') as f:
+        writer = csv.writer(f)
+        writer.writerow(encounter)
+
+
+def retrieve_physicians(filename):
+    """
+    Retrieve all physicians from a CSV file.
+
+    Arguments:
+    filename -- the name of the CSV file containing the physicians
+
+    Returns:
+    A list of tuples, where each tuple contains the attributes of a physician
+    """
+    with open(filename) as f:
+        reader = csv.reader(f)
+        physicians = [tuple(row) for row in reader]
+    return physicians
+
+
+def retrieve_patients(filename):
+    """
+    Retrieve all patients from a CSV file.
+
+    Arguments:
+    filename -- the name of the CSV file containing the patients
+
+    Returns:
+    A list of tuples, where each tuple contains the attributes of a patient
+    """
+    with open(filename) as f:
+        reader = csv.reader(f)
+        patients = [tuple(row) for row in reader]
+    return patients
+
+
+def process_physicians(physicians):
+    physician_objects = []
+    headers = physicians[0]
+    for physician_data in physicians[1:]:
+        id, name, speciality = physician_data
+        physician = Physician(id, name, speciality)
+        physician_objects.append(physician)
+    return physician_objects
+
+
+def process_patients(patient_data):
+    patient_objects = []
+    headers = patient_data[0]
+    for i in range(1, len(patient_data)):
+        emr_id, pname, gender, phone_num = patient_data[i]
+        patient_objects.append(Patient(emr_id, pname, gender, phone_num))
+    return patient_objects
+
+
+def write_csv_header(fields, filename):
+    with open(filename, "w", newline="") as f:
+        writer = csv.writer(f)
         writer.writerow(fields)
 
 
-# Returns the Physician's attributes from a Physicians csv File
-def physician_retriever(csv_file):
-    all_physicians = []
-    with open(csv_file) as physicians:
-        physicians = csv.reader(physicians)
-        for attributes in physicians:
-            all_physicians.append(attributes)
-
-    return all_physicians
-
-
-# Returns the Patient's attributes from a Patients csv File
-def patients_retriever(csv_file):
-    all_patients = []
-    with open(csv_file) as patient:
-        patients = csv.reader(patient)
-        for attributes in patients:
-            all_patients.append(attributes)
-
-    return all_patients
+def write_encounters_to_csv(encounters: List[Encounter]):
+    fieldnames = ["Physician", "Patient", "Date", "Disease", "Medication"]
+    filename = "encounters.csv"
+    write_csv_header(fieldnames, filename)
+    with open(filename, "a") as f:
+        writer = csv.DictWriter(f, fieldnames=fieldnames)
+        for encounter in encounters:
+            writer.writerow({
+                "Physician": encounter.physician.name,
+                "Patient": encounter.patient.name,
+                "Date": encounter.date,
+                "Disease": encounter.disease,
+                "Medication": encounter.medication
+            })
 
 
 def main():
     # will store all the physicians here
-    physicians = physician_retriever(r"physicians.csv")
-    print(physicians)
-    # the attributes of all physicians
-    headers, physician1_atr, physician2_atr, physician3_atr = physicians
-#
-#     # the attributes of each physicians separated
-#     id1, name1, speciality1, _ = physician1_atr  # physician 1 attributes
-#     id2, name2, speciality2, _ = physician2_atr  # physician 2 attributes
-#     id3, name3, speciality3, _ = physician3_atr  # physician 3 attributes
-#
-#     # Defining The Physicians
-#     physician1 = Physician(id1, name1, speciality1)
-#     physician2 = Physician(id2, name2, speciality2)
-#     physician3 = Physician(id3, name3, speciality3)
-#
-#     # will store all patients here
-#     patients = patients_retriever(r"patients.csv")
-#
-#     # The attributes of all patients
-#     headers, patient1, patient2, patient3, patient4, patient5, \
-#     patient6, patient7, patient8, patient9, patient10 = patients
-#
-#     # the attributes of each physicians separated
-#
-#     emr_id1, pname1, gender1, phone_num1 = patient1  # Patient 1 attributes
-#     emr_id2, pname2, gender2, phone_num2 = patient2  # Patient 2 attributes
-#     emr_id3, pname3, gender3, phone_num3 = patient3  # Patient 3 attributes
-#     emr_id4, pname4, gender4, phone_num4 = patient4  # Patient 4 attributes
-#     emr_id5, pname5, gender5, phone_num5 = patient5  # Patient 5 attributes
-#     emr_id6, pname6, gender6, phone_num6 = patient6  # Patient 6 attributes
-#     emr_id7, pname7, gender7, phone_num7 = patient7  # Patient 7 attributes
-#     emr_id8, pname8, gender8, phone_num8 = patient8  # Patient 8 attributes
-#     emr_id9, pname9, gender9, phone_num9 = patient9  # Patient 9 attributes
-#     emr_id10, pname10, gender10, phone_num10 = patient10  # Patient 10 attributes
-#
-#     # The Patients Objects Creation
-#     patient1 = Patient(emr_id1, pname1, gender1, phone_num1)
-#     patient2 = Patient(emr_id2, pname2, gender2, phone_num2)
-#     patient3 = Patient(emr_id3, pname3, gender3, phone_num3)
-#     patient4 = Patient(emr_id4, pname4, gender4, phone_num4)
-#     patient5 = Patient(emr_id5, pname5, gender5, phone_num5)
-#     patient6 = Patient(emr_id6, pname6, gender6, phone_num6)
-#     patient7 = Patient(emr_id7, pname7, gender7, phone_num7)
-#     patient8 = Patient(emr_id8, pname8, gender8, phone_num8)
-#     patient9 = Patient(emr_id9, pname9, gender9, phone_num9)
-#     patient10 = Patient(emr_id10, pname10, gender10, phone_num10)
-#
-#     # The Encounters Objects Creation
-#     encounter1 = Encounter(physician1, patient7, "13/11/21", "anxiety", "Xanax")
-#     encounter2 = Encounter(physician2, patient4, "14/08/21", "face rash", "Calamine")
-#     encounter3 = Encounter(physician1, patient3, "11/04/21", "diabetes", "Linagliptin")
-#     encounter4 = Encounter(physician3, patient1, "06/010/21", "high blood pressure", "Diuretics")
-#     encounter5 = Encounter(physician2, patient9, "04/08/21", "high cholesterol", "Atorvastatin")
-#
-#     # printing the patients
-#
-#     print("Patients:-> \n")
-#
-#     print(patient1)
-#     print(patient2)
-#     print(patient3)
-#     print(patient4)
-#     print(patient5)
-#     print(patient6)
-#     print(patient7)
-#     print(patient8)
-#     print(patient9)
-#     print(patient10)
-#
-#     # to differentiate between patients and physicians
-#     print("#########################################################\n")
-#
-#     print("Physicians:-> \n")
-#
-#     # printing the Physicians
-#     print(physician1)
-#     print(physician2)
-#     print(physician3)
-#
-#     # to differentiate between Encounters and the others
-#     print("#########################################################\n")
-#
-#     print("Encounters:->\n")
-#
-#     # Printing the Encounters
-#     print(encounter1, "\n")
-#     print(encounter2, "\n")
-#     print(encounter3, "\n")
-#     print(encounter4, "\n")
-#     print(encounter5)
-#
-#     ''' To Add Encounters into the Encounters.csv File '''
-#
-#     # I used this to add the headers, since I am appending in the function, so this will help in not rewriting the
-#     # headers every time the function is called
-#     with open("encounter.csv", "a", newline="") as encounter:
-#         # Tuple of headers
-#         headers = ("Physician", "Patient", "Date", "Disease", "Medication")
-#         writer = csv.writer(encounter)
-#         writer.writerow(headers)
-#
-#     # Adds Encounter 1
-#     add_encounter_csv(encounter1.get_physician(), encounter1.get_patient(), encounter1.get_date(),
-#                       encounter1.get_disease(), encounter1.get_medication())
-#
-#     # Adds Encounter 2
-#     add_encounter_csv(encounter2.get_physician(), encounter2.get_patient(), encounter2.get_date(),
-#                       encounter2.get_disease(), encounter2.get_medication())
-#
-#     # Adds Encounter 3
-#     add_encounter_csv(encounter3.get_physician(), encounter3.get_patient(), encounter3.get_date(),
-#                       encounter3.get_disease(), encounter3.get_medication())
-#
-#     # Adds Encounter 4
-#     add_encounter_csv(encounter4.get_physician(), encounter4.get_patient(), encounter4.get_date(),
-#                       encounter4.get_disease(), encounter4.get_medication())
-#
-#     # Adds Encounter 5
-#     add_encounter_csv(encounter5.get_physician(), encounter5.get_patient(), encounter5.get_date(),
-#                       encounter5.get_disease(), encounter5.get_medication())
-#
-#
-main()
+    physicians = retrieve_physicians(r"physicians.csv")
+    physician_objects = process_physicians(physicians)
+
+    # will store all patients here
+    patients = retrieve_patients(r"patients.csv")
+    patient_objects = process_patients(patients)
+
+    encounter_objects = []
+
+    # Diseases List
+    diseases = ["anxiety", "diabetes", "face rash", "high blood pressure", "high cholesterol"]
+
+    # Medications List
+    medications = ["Xanax", "Linagliptin", "Calamine", "Diuretics", "Atorvastatin"]
+
+    # create a list of encounter with different dates, diseases, and medications
+    for physician, patient in zip(physician_objects, patient_objects):
+        # generate a random date
+        date = datetime.strftime(datetime.now(), "%d/%m/%y")
+        # generate a random disease from the list
+        disease = random.choice(diseases)
+        # generate a random medication from the list
+        medication = random.choice(medications)
+
+        encounter_objects.append(Encounter(physician, patient, date, disease, medication))
+
+    # printing the patients
+    print("Patients:-> \n")
+    for patient in patient_objects:
+        print(patient.__repr__())
+
+    # to differentiate between patients and physicians
+    print("#########################################################\n")
+
+    print("Physicians:-> \n")
+    for physician in physician_objects:
+        print(physician.__repr__())
+
+    # to differentiate between Encounters and the others
+    print("#########################################################\n")
+
+    # Printing the Encounters
+    print("Encounters:->\n")
+    for encounter in encounter_objects:
+        print(encounter.__repr__())
+
+    ''' To Add Encounters into the Encounters.csv File '''
+
+    write_encounters_to_csv(encounter_objects)
+
+
+if __name__ == '__main__':
+    main()
