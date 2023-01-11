@@ -1,8 +1,8 @@
-#EMR-SYSTEM
+# EMR-SYSTEM
 
 An Electronic Medical Record (EMR) application to keep track of encounters between physicians and patients. One patient can have multiple encounters with different physicians, and one physician can be involved in treatment for many patients.
 
-##Description
+## Description
 
 This application is written in python and uses classes to represent physicians and patients. The Physician class contains properties for the physician's id number, name, and specialty. The Patient class contains properties for the patient's EMR ID, name, gender, and phone number.
 
@@ -14,7 +14,7 @@ The Patient class also includes methods for getting and setting each property, a
 
 Additionally, the application provides a Encounter class which will hold the encounter details like date, diagnosis, medication prescribed and the physician and patient involved.
 
-##Usage
+## Usage
 
 To use the EMR system, you can create instances of the Physician, Patient, and Encounter classes, set the properties, and then call the special methods to print out the objects.
 
@@ -41,5 +41,5 @@ print(patient_1)
 # Print the encounter object
 print(encounter_1)
 ```
-##Note
+## Note
 This is a simple EMR system designed for demonstration purpose, it does not provide any advanced functionality related to patient-physician encounter management.
